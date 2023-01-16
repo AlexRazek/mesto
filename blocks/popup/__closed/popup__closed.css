@@ -11,9 +11,7 @@
     border: none;
     align-self: center;
     justify-content: center;
-    /* background: none; */
     cursor: pointer;
-    /* text-decoration: none; */
 }
 
 .popup__closed:hover {

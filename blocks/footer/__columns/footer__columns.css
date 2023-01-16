@@ -8,17 +8,23 @@
     align-items: baseline;
 }
   
-/* @media (max-width: 1023px) {
+@media (max-width: 1023px) {
     .footer__columns {
-      width: calc(100% - 48px);
+      width: calc(100% - 160px);
+      justify-content: start;
     }
-  } */
+  }
+
+@media (max-width: 767px) {
+    .footer__columns {
+      width: calc(100% - 160px);
+      justify-content: start;
+    }
+  }
+  
   
 @media (max-width: 425px) {
     .footer__columns {
-      /* flex-direction: column; */
-      /* margin: 0; */
       width: calc(100% - 38px);
-      /* margin-left: 36px; */
     }
   }

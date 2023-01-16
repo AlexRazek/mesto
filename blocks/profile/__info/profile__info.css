@@ -12,19 +12,13 @@
 }
 
 
-@media (max-width: 425px) {
+@media (max-width: 767px) {
     .profile__info {
         margin: 0;
         width: 100%;
         margin-top: 26px;
-        /* margin-left: 0; */
         margin-bottom: 36px;
-        /* grid-template-columns: min-content(100px, 1fr); */
-        /* grid-template-columns: minmax(189px, 1fr) 18px; */
-        /* grid-template-columns: minmax(189px, 1fr); */
-        /* grid-template-columns: 220px auto; */
         grid-template-columns: auto auto;
-        /* grid-template-rows: repeat(2, min-content); */
         grid-column: 1;
         grid-row: 2;
         column-gap: 10px;
@@ -32,4 +26,3 @@
         justify-content: center;
     }
   }
-

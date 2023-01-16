@@ -23,9 +23,9 @@
 @media (max-width: 1023px) {
     .elements__container {
         width: calc(100% - 160px);
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        column-gap: 0;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        column-gap: 10px;
         row-gap: 10px;
         margin-bottom: 80px;
       }
@@ -33,9 +33,13 @@
   
 @media (max-width: 767px) {
     .elements__container {
-        width: calc(100% - 40px);
+        width: calc(100% - 160px);
+        max-width: 282px;
         grid-template-columns: 1fr;
         grid-template-rows: repeat(6, 1fr);
+        /* grid-template-columns: repeat(2, 1fr);;
+        grid-template-rows: repeat(2, 1fr); */
+        column-gap: 10px;
         gap: 14px;
         margin-bottom: 56px;
       }
