@@ -1,0 +1,27 @@
+.profile__info-edit-button {
+    margin: 0;
+    padding: 0;
+    grid-column: 2;
+    grid-row: 1;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #FFFFFF;
+    place-self: center;
+    /* vertical-align: baseline; */
+    box-sizing: border-box;
+    background: url("../../../images/edit_button.svg");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    cursor: pointer;
+}
+
+@media (max-width: 425px) {
+    .profile__info-edit-button {
+        margin: 0;
+        place-self: center;
+        /* margin-left: 10px; */
+        width: 18px;
+        height: 18px;
+    }
+} 
