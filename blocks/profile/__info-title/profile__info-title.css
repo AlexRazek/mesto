@@ -9,6 +9,7 @@
     font-weight: 500;
     color: #FFF;
     max-width: 294px;
+    width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -26,7 +27,6 @@
   @media (max-width: 1023px) {
     .profile__info-title {
         font-size: 34px;
-        line-height: 40px;
       }
     }
 
@@ -41,8 +41,6 @@
     .profile__info-title {
       margin: 0;
       margin-left: 27px;
-      font-size: 27px;
-      line-height: 33px;
       grid-column: 1;
       grid-row: 1;
       text-align: center;

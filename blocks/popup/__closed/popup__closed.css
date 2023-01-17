@@ -7,19 +7,19 @@
     right: -38px;
     color: #FFF;
     background-size: cover;
-    background-color: black;
+    background-color: none;
     border: none;
     align-self: center;
     justify-content: center;
     cursor: pointer;
+    opacity: 1;
 }
 
 .popup__closed:hover {
     opacity: 0.6;
 }
 
-
-@media (max-width: 425px) {
+@media (max-width: 767px) {
     .popup__closed {
         width: 20px;
         height: 20px;

@@ -18,7 +18,7 @@ popupOpenBtn.addEventListener("click", function(event) {
 
 
 function openPopup () {
-    popupContainer.classList.add('popup__opened');
+    popupContainer.classList.add('popup_opened');
     overlay.classList.add('overlay__is-active');
     // rootMain.classList.add('overlay');
     console.log(openPopup);
@@ -57,7 +57,7 @@ popupCloseBtn.addEventListener("click", function(event) {
 });
 
 function closePopup () {
-    popupContainer.classList.remove('popup__opened');
+    popupContainer.classList.remove('popup_opened');
     overlay.classList.remove('overlay__is-active');
     // rootMain.classList.remove('overlay')
     console.log(closePopup);
@@ -71,8 +71,8 @@ let formElement = document.querySelector('.popup__input');
 // alert(elem.value);
 // let nameInput = document.querySelector('input');
 // let jobInput = document. querySelector('input');
-let nameInput = document.querySelector('.popup__text_type_name');
-let jobInput = document. querySelector('.popup__text_type_about');
+let nameInput = document.querySelector('.popup__text-name');
+let jobInput = document. querySelector('.popup__text-about');
 
 console.log(formElement[0].value)
 // console.log(nameInput.value); 
