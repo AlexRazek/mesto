@@ -2,7 +2,7 @@
     width: 100%;
     grid-column: 1;
     grid-row: 1;
-    width: 120px;
+    max-width: 120px;
     height: 120px;
     place-self: center center;
     border-radius: 50%;
