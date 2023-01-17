@@ -23,12 +23,16 @@
     }
   }
 
-
+@media (max-width: 767px) {
+  .header__container {
+    width: 100%;
+    }
+  } 
 
 @media (max-width: 425px) {
   .header__container {
       width: 100%;
       margin-top: 28px;
-      margin-bottom: 42px;
+      margin-bottom: 39px;
     }
   }
