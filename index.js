@@ -9,14 +9,15 @@ console.log(profileTitle.textContent)
 console.log(profileSubtitle.textContent)
 
 let formElement = document.querySelector('.popup__input');
+let nameInput = document.querySelector('.popup__text_type_name');
+let jobInput = document.querySelector('.popup__text_type_about');
 
 
 function openPopup () {
-    formElement[0].value = profileTitle.textContent;
-    formElement[1].value = profileSubtitle.textContent;
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileSubtitle.textContent;
     popupContainer.classList.add('popup_opened');
     console.log(openPopup)
-    
 };
 
 function closePopup () {
@@ -27,8 +28,8 @@ function closePopup () {
 
 function handleFormSubmit (event) {
     event.preventDefault(); 
-    profileTitle.textContent = formElement[0].value;
-    profileSubtitle.textContent = formElement[1].value;
+    profileTitle.textContent = nameInput.value;
+    profileSubtitle.textContent = jobInput.value;
     console.log(profileTitle.textContent);
     closePopup();
     console.log(handleFormSubmit);

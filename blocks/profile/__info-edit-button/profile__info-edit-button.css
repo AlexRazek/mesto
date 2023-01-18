@@ -26,7 +26,6 @@
 @media (max-width: 425px) {
     .profile__info-edit-button {
         margin: 0;
-        place-self: center;
         background-size: 7.5px;
         width: 18px;
         height: 18px;

@@ -39,11 +39,8 @@
   
   @media (max-width: 425px) {
     .profile__info-title {
-      margin: 0;
       margin-left: 27px;
       max-width: 189px;
-      grid-column: 1;
-      grid-row: 1;
       text-align: center;
       width: 90%;
     }
