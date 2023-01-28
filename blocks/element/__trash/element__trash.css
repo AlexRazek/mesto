@@ -6,7 +6,7 @@
     background: url("../../../images/trash.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: none;
+    /* background-color: none; */
     border: none;
     justify-content: center;
     width: 18px;

@@ -30,6 +30,7 @@ let popupOpenBtn = document.querySelector('.profile__info-edit-button');
 let popupOpenCardBtn = document.querySelector('.profile__add-button');
 let popupEditContainer = document.querySelector('#popupEdit');
 let popupCardContainer = document.querySelector('#popupAddCard');
+let cardLike = document.querySelector('.element__like');
 
 let popupCloseBtn = document.querySelector('.popup__closed');
 let popupCloseCardBtn = document.querySelector('#popupAddCard .popup__closed');
@@ -83,6 +84,10 @@ function handleFormSubmit (event) {
     console.log(handleFormSubmit);
 };
 
+function cardToLike () {
+    cardLike.classList.toggle('element__like_active');
+}
+
 
 
 popupOpenBtn.addEventListener("click", openEditPopup); 
@@ -92,3 +97,5 @@ popupCloseBtn.addEventListener("click", closeEditPopup);
 popupCloseCardBtn.addEventListener("click", closeCardPopup);
 
 formElement.addEventListener("submit", handleFormSubmit); 
+
+cardLike.addEventListener("click", cardToLike);
