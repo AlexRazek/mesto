@@ -26,17 +26,36 @@ const initialCards = [
   ];
 
 
-let popupOpenBtn = document.querySelector('.profile__info-edit-button');
+let popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
 let popupOpenCardBtn = document.querySelector('.profile__add-button');
+let popupCloseEditBtn = document.querySelector('.popup__closed');
+let popupCloseCardBtn = document.querySelector('#popupAddCard .popup__closed');
+
 let popupEditContainer = document.querySelector('#popupEdit');
 let popupCardContainer = document.querySelector('#popupAddCard');
-let cardLike = document.querySelector('.element__like');
-
-let popupCloseBtn = document.querySelector('.popup__closed');
-let popupCloseCardBtn = document.querySelector('#popupAddCard .popup__closed');
 
 let profileTitle = document.querySelector('.profile__info-title');
 let profileSubtitle = document.querySelector('.profile__info-subtitle');
+
+const template = document.querySelector('#card-template').content.querySelector('.element');
+let elementsCardContainer = document.querySelector('.elements');
+let cardImgLink = document.querySelector('.element__image');
+let cardName = document.querySelector('.element__title');
+const cardLikeBtn = document.querySelector('.element__like');
+const trashCardBtn = document.querySelector('.element__trash');
+
+
+function provideCards (items) {
+    let cardsElement = initialCards.map((item) => {
+        let cardElement = template.cloneNode(true);
+        cardElement.querySelector('.element__title').textContent = item.name;
+        cardElement.querySelector('.element__image').src = item.link;
+        return cardElement;
+    })
+    elementsCardContainer.append(...cardsElement);
+}
+
+provideCards();
 
 
 console.log(profileTitle.textContent)
@@ -47,6 +66,7 @@ let nameInput = document.querySelector('.popup__text_type_name');
 let jobInput = document.querySelector('.popup__text_type_about');
 let nameCardInput = document.querySelector('.popup__text_type_namecard');
 let linkCardInput = document.querySelector('.popup__text_type_linkcard');
+
 
 
 function openEditPopup () {
@@ -85,17 +105,17 @@ function handleFormSubmit (event) {
 };
 
 function cardToLike () {
-    cardLike.classList.toggle('element__like_active');
+    cardLikeBtn.classList.toggle('element__like_active');
 }
 
 
 
-popupOpenBtn.addEventListener("click", openEditPopup); 
+popupOpenEditBtn.addEventListener("click", openEditPopup); 
 popupOpenCardBtn.addEventListener("click", openCardPopup); 
 
-popupCloseBtn.addEventListener("click", closeEditPopup);
+popupCloseEditBtn.addEventListener("click", closeEditPopup);
 popupCloseCardBtn.addEventListener("click", closeCardPopup);
 
 formElement.addEventListener("submit", handleFormSubmit); 
 
-cardLike.addEventListener("click", cardToLike);
+cardLikeBtn.addEventListener("click", cardToLike);
