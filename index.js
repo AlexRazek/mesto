@@ -27,73 +27,83 @@ const initialCards = [
 
 
 let popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
-let popupOpenCardBtn = document.querySelector('.profile__add-button');
-let popupCloseEditBtn = document.querySelector('.popup__closed');
-let popupCloseCardBtn = document.querySelector('#popupAddCard .popup__closed');
+let popupAddCardBtn = document.querySelector('.profile__add-button');
 
-let popupEditContainer = document.querySelector('#popupEdit');
-let popupCardContainer = document.querySelector('#popupAddCard');
+let popupCloseEditBtn = document.querySelector('.popup__closed');
+let popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
+
+let popupEditContainer = document.querySelector('#popup-edit');
+let popupCardContainer = document.querySelector('#popup-addcard');
 
 let profileTitle = document.querySelector('.profile__info-title');
 let profileSubtitle = document.querySelector('.profile__info-subtitle');
 
-const template = document.querySelector('#card-template').content.querySelector('.element');
+let cardTemplate = document
+    .querySelector('#card-template')
+    .content.querySelector('.element');
 let elementsCardContainer = document.querySelector('.elements');
-let cardImgLink = document.querySelector('.element__image');
-let cardName = document.querySelector('.element__title');
-const cardLikeBtn = document.querySelector('.element__like');
-const trashCardBtn = document.querySelector('.element__trash');
-
-
-function provideCards (items) {
-    let cardsElement = initialCards.map((item) => {
-        let cardElement = template.cloneNode(true);
-        cardElement.querySelector('.element__title').textContent = item.name;
-        cardElement.querySelector('.element__image').src = item.link;
-        return cardElement;
-    })
-    elementsCardContainer.append(...cardsElement);
-}
-
-provideCards();
-
+// let cardImgLink = document.querySelector('.element__image');
+// let cardName = document.querySelector('.element__title');
+// let cardLikeBtn = document.querySelector('.element__like');
+// let trashCardBtn = document.querySelector('.element__trash');
 
 console.log(profileTitle.textContent)
 console.log(profileSubtitle.textContent)
 
-let formElement = document.querySelector('.popup__input');
+let formEditElement = document.querySelector('#edit-popup');
+let formCardElement = document.querySelector('#card-popup');
+// let submitCardAdd = document.querySelector('.popup__submit-btn_action');
 let nameInput = document.querySelector('.popup__text_type_name');
 let jobInput = document.querySelector('.popup__text_type_about');
 let nameCardInput = document.querySelector('.popup__text_type_namecard');
+// console.log(nameCardInput.value);
 let linkCardInput = document.querySelector('.popup__text_type_linkcard');
+// console.log(linkCardInput.value);
 
 
+function handleCardFormSubmit (event) {
+    event.preventDefault(); 
 
-function openEditPopup () {
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileSubtitle.textContent;
-    popupEditContainer.classList.add('popup_opened');
-    console.log(openEditPopup);
+    let cardElement = cardTemplate.cloneNode(true);
+    cardElement.querySelector('.element__title').textContent = nameCardInput.value;
+    cardElement.querySelector('.element__image').src = linkCardInput.value;
+    cardElement.querySelector('.element__like').addEventListener('click', cardToLike);
+    cardElement.querySelector('.element__trash').addEventListener('click', () => {
+        cardElement.remove();
+    });
+    
+    elementsCardContainer.prepend(cardElement);
+    closeCardPopup();
+
+    nameCardInput.value = '';
+    linkCardInput.value = '';
 };
 
-function openCardPopup () {
-    // nameInput.value = profileTitle.textContent;
-    // jobInput.value = profileSubtitle.textContent;
-    popupCardContainer.classList.add('popup_opened');
-    console.log(openCardPopup)
-};
+// собираем карточки в массив//
+function provideCards (items) {
+    let cardsElement = initialCards.map((item) => {
+        let cardElement = cardTemplate.cloneNode(true);
+        cardElement.querySelector('.element__title').textContent = item.name;
+        cardElement.querySelector('.element__image').src = item.link;
+        cardElement.querySelector('.element__trash').addEventListener('click', () => {
+            cardElement.remove();
+        });
+        cardElement.querySelector('.element__like').addEventListener('click', cardToLike);
+        return cardElement;  
+    })
+    elementsCardContainer.append(...cardsElement);
+}
+provideCards();
+
 
 function closeEditPopup () {
     popupEditContainer.classList.remove('popup_opened');
     console.log(closeEditPopup);
 };
 
-function closeCardPopup (event) {
-    event.preventDefault();
+function closeCardPopup () {
     popupCardContainer.classList.remove('popup_opened');
-    console.log(closeCardPopup);
 };
-
 
 function handleFormSubmit (event) {
     event.preventDefault(); 
@@ -104,18 +114,26 @@ function handleFormSubmit (event) {
     console.log(handleFormSubmit);
 };
 
-function cardToLike () {
-    cardLikeBtn.classList.toggle('element__like_active');
+function cardToLike (e) {
+    e.target.classList.toggle('element__like_active');
 }
 
+// popupOpenEditBtn.addEventListener("click", openEditPopup); 
+popupOpenEditBtn.addEventListener("click", () => {
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileSubtitle.textContent;
+    popupEditContainer.classList.add('popup_opened');
+}); 
 
-
-popupOpenEditBtn.addEventListener("click", openEditPopup); 
-popupOpenCardBtn.addEventListener("click", openCardPopup); 
+// popupOpenEditBtn.addEventListener("click", openCardPopup); 
+popupAddCardBtn.addEventListener("click", () => {
+    popupCardContainer.classList.add('popup_opened');
+}); 
 
 popupCloseEditBtn.addEventListener("click", closeEditPopup);
 popupCloseCardBtn.addEventListener("click", closeCardPopup);
 
-formElement.addEventListener("submit", handleFormSubmit); 
-
-cardLikeBtn.addEventListener("click", cardToLike);
+formEditElement.addEventListener("submit", handleFormSubmit); 
+formCardElement.addEventListener("submit", handleCardFormSubmit);
+// submitCardAdd.addEventListener("submit", handleCardFormSubmit);
+// console.log(handleCardFormSubmit);

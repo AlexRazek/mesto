@@ -20,39 +20,39 @@
             <button type="button" aria-label="редактировать данные" class="profile__info-edit-button"></button>
         </div>
     </section>
-    <section class="elements" aria-label="'элементы'"> </section>
+    <section class="elements" aria-label="'элементы'"></section>
   </main>
   <footer class="footer"> 
     <p class="footer__author"> &copy; 2022&nbsp;Волотчин&nbsp;Александр</p>
   </footer>
-  <section class="popup" id="popupEdit">
+  <section class="popup" id="popup-edit">
     <div class="popup__container">
         <button type="button" aria-label="закрыть" class="popup__closed"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="formPopup" class="popup__input">
+        <form name="form-popup" id="edit-popup" class="popup__input">
             <input type="text" id="nameauthor" name="name" value="О себе" class="popup__text popup__text_type_name">
             <input type="text" id="aboutauthor" name="about" value="Чем занимаетесь" class="popup__text popup__text_type_about">
-            <button type="submit" aria-label="отправить данные на сервер" class="popup__submit-btn popup__submit-btn_action_add">Сохранить</button>
+            <button type="submit" aria-label="отправить данные на сервер" class="popup__submit-btn">Сохранить</button>
         </form>
     </div>
   </section>
-  <section class="popup" id="popupAddCard">
+  <section class="popup" id="popup-addcard">
     <div class="popup__container">
         <button type="button" aria-label="закрыть" class="popup__closed"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form name="formPopup" class="popup__input">
-            <input type="text" id="namecard" name="namecard" value="Название" class="popup__text popup__text_type_namecard">
-            <input type="text" id="linkcard" name="linkcard" value="Ссылка на картинку" class="popup__text popup__text_type_linkcard">
-            <button type="submit" aria-label="отправить данные на сервер" class="popup__submit-btn popup__submit-btn_action_add">Сохранить</button>
+        <form name="form-card" id="card-popup" class="popup__input">
+            <input type="text" id="namecard" name="namecard" placeholder="Название" value="Название" class="popup__text popup__text_type_namecard">
+            <input type="text" id="linkcard" name="linkcard" placeholder="Ссылка на картинку" value="Ссылка на картинку" class="popup__text popup__text_type_linkcard">
+            <button type="submit" aria-label="отправить данные на сервер" class="popup__submit-btn popup__submit-btn_action">Сохранить</button>
         </form>
     </div>
   </section>
-  <section class="popup" id="popupImage">
+  <!-- <section class="popup" id="popupImage">
     <div class="popup__container">
         <button type="button" aria-label="закрыть" class="popup__closed"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
     </div>
-  </section>
+  </section> -->
   <template id="card-template">
     <article class="element">
       <img class="element__image">
@@ -64,40 +64,3 @@
   <script src="index.js"></script>
 </body>
 </html>
-
-
-
-
-<!-- 
-<article class="element">
-  <img src="./images/grid_karachaevsk.jpg" class="element__image" alt="старый храм на фоне подножья гор">
-  <h2 class="element__title">Карачаевск</h2>
-  <button type="button" aria-label="нравится" class="element__like"></button>
-  <button type="button" aria-label="корзина" class="element__trash"></button>
-</article>
-<article class="element">
-  <img src="./images/grid_elbrus.jpg" class="element__image" alt="вечерний закат над горой Эльбрус, вид сквозь поле">
-  <h2 class="element__title">Гора Эльбрус</h2>
-  <button type="button" aria-label="нравится" class="element__like"></button>
-  <button type="button" aria-label="корзина" class="element__trash"></button>
-</article>
-<article class="element">
-  <img src="./images/grid_dombai.jpg" class="element__image" alt="горная гряда, сначала идет лес, далее три пика горы Домбай">
-  <h2 class="element__title">Домбай</h2>
-  <button type="button" aria-label="нравится" class="element__like"></button>
-</article>
-<article class="element">
-  <img src="./images/grid_elbrus.jpg" class="element__image" alt="вечерний закат над горой Эльбрус, вид сквозь поле">
-  <h2 class="element__title">Гора Эльбрус</h2>
-  <button type="button" aria-label="нравится" class="element__like"></button>
-</article>
-<article class="element">
-  <img src="./images/grid_dombai.jpg" class="element__image" alt="горная гряда, сначала идет лес, далее три пика горы Домбай">
-  <h2 class="element__title">Домбай</h2>
-  <button type="button" aria-label="нравится" class="element__like"></button>
-</article>
-<article class="element">
-  <img src="./images/grid_karachaevsk.jpg" class="element__image" alt="старый храм на фоне подножья гор">
-  <h2 class="element__title">Карачаево-Черкесск</h2>
-  <button type="button" aria-label="нравится" class="element__like"></button>
-</article> -->
