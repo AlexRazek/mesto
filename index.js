@@ -30,9 +30,10 @@ const popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
 const popupAddCardBtn = document.querySelector('.profile__add-button');
 const popupOpenImage = document.querySelector('.elements');
 
-const popupCloseEditBtn = document.querySelector('.popup__closed');
-const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
-const popupCloseImageBtn = document.querySelector('#popup-image .popup__closed');
+// const popupCloseEditBtn = document.querySelector('.popup__closed');
+// const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
+// const popupCloseImageBtn = document.querySelector('#popup-image .popup__closed');
+const closeButtons = document.querySelectorAll('.popup__closed');
 
 const popupEditContainer = document.querySelector('#popup-edit');
 const popupCardContainer = document.querySelector('#popup-addcard');
@@ -109,7 +110,7 @@ function closeImagePopup () {
     popupImageContainer.classList.remove('popup_opened');
 };
 
-// форма для редактирвоания данных о пользователе//
+// форма для редактироdания данных о пользователе//
 function handleFormSubmit (event) {
     event.preventDefault(); 
     profileTitle.textContent = nameInput.value;
@@ -140,9 +141,14 @@ function openImagePopup(event) {
     openImageTitle.textContent = event.target
         .closest('.element')
         .querySelector('.element__title').textContent;
-    
 }
 
+closeButtons.forEach((button) => {
+    // находим 1 раз ближайший к крестику попап 
+    const popup = button.closest('.popup');
+    // устанавливаем обработчик закрытия на крестик
+    button.addEventListener('click', () => closePopup(popup));
+  });
 
 popupOpenEditBtn.addEventListener("click", () => {
     nameInput.value = profileTitle.textContent;
@@ -156,19 +162,17 @@ popupAddCardBtn.addEventListener("click", () => {
 
 popupOpenImage.addEventListener("click", openImagePopup);
 
+// popupCloseEditBtn.addEventListener("click", () => {
+//     closePopup(popupEditContainer)
+// });
 
-popupCloseEditBtn.addEventListener("click", () => {
-    closePopup(popupEditContainer)
-});
+// popupCloseCardBtn.addEventListener("click", () => {
+//     closePopup(popupCardContainer)
+// });
 
-popupCloseCardBtn.addEventListener("click", () => {
-    closePopup(popupCardContainer)
-});
-
-popupCloseImageBtn.addEventListener("click", () => {
-    closePopup(popupImageContainer)
-});
-
+// popupCloseImageBtn.addEventListener("click", () => {
+//     closePopup(popupImageContainer)
+// });
 
 formEditElement.addEventListener("submit", handleFormSubmit); 
 formCardElement.addEventListener("submit", handleCardFormSubmit);
