@@ -41,8 +41,8 @@
         <button type="button" aria-label="закрыть" class="popup__closed"></button>
         <h2 class="popup__title">Новое место</h2>
         <form name="form-card" id="card-popup" class="popup__input">
-            <input type="text" id="namecard" name="namecard" placeholder="Название" value="Название" class="popup__text popup__text_type_namecard">
-            <input type="text" id="linkcard" name="linkcard" placeholder="Ссылка на картинку" value="Ссылка на картинку" class="popup__text popup__text_type_linkcard">
+            <input type="text" id="namecard" name="namecard" placeholder="Название" value="" class="popup__text popup__text_type_namecard">
+            <input type="text" id="linkcard" name="linkcard" placeholder="Ссылка на картинку" value="" class="popup__text popup__text_type_linkcard">
             <button type="submit" aria-label="отправить данные на сервер" class="popup__submit-btn popup__submit-btn_action">Создать</button>
         </form>
     </div>
@@ -50,13 +50,13 @@
   <section class="popup" id="popup-image">
     <div class="popup__image-container">
       <button type="button" aria-label="закрыть" class="popup__closed"></button>
-      <img class="popup__image-view">
+      <img class="popup__image-view" alt=" ">
       <h2 class="popup__image-title"></h2>
     </div>
   </section>
   <template id="card-template">
     <article class="element" id="element">
-      <img class="element__image">
+      <img class="element__image" alt=" ">
       <h2 class="element__title"></h2>
       <button type="button" aria-label="нравится" class="element__like"></button>
       <button type="button" aria-label="корзина" class="element__trash"></button>
