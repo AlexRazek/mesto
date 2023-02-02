@@ -106,10 +106,6 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
 
-function closeImagePopup () {
-    popupImageContainer.classList.remove('popup_opened');
-};
-
 // форма для редактироdания данных о пользователе//
 function handleFormSubmit (event) {
     event.preventDefault(); 
