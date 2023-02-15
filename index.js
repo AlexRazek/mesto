@@ -84,6 +84,10 @@ function handleCardFormSubmit (event) {
     elementsCardContainer.prepend(cardElement);
     closePopup(popupCardContainer);
 
+  //   if(event.key === 'Escape') {
+  //     closePopup(popupCardContainer);
+  //  }
+
     event.target.reset()
 };
 
@@ -104,6 +108,7 @@ function openPopup(popup) {
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+
 }
 
 // форма для редактироdания данных о пользователе//
@@ -172,4 +177,21 @@ popupOpenImage.addEventListener("click", openImagePopup);
 
 formEditElement.addEventListener("submit", handleFormSubmit); 
 formCardElement.addEventListener("submit", handleCardFormSubmit);
+
+
+
+const formsConfig = {
+  formSelector: '.popup__input',
+  inputSelector: '.popup__text',
+  submitButtonSelector: '.popup__submit-btn',
+  inactiveButtonClass: 'popup__submit-btn_inactive',
+  inputErrorClass: 'popup__text_type_error',
+  errorClass: 'popup__input-error_active'
+};
+
+
+
+enableValidation(formsConfig);
+
+
 
