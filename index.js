@@ -30,9 +30,12 @@ const popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
 const popupAddCardBtn = document.querySelector('.profile__add-button');
 const popupOpenImage = document.querySelector('.elements');
 
-// const popupCloseEditBtn = document.querySelector('.popup__closed');
-// const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
-// const popupCloseImageBtn = document.querySelector('#popup-image .popup__closed');
+
+const popupContainer = document.querySelector('.popup');
+
+const popupCloseEditBtn = document.querySelector('.popup__closed');
+const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
+const popupCloseImageBtn = document.querySelector('#popup-image .popup__closed');
 const closeButtons = document.querySelectorAll('.popup__closed');
 
 const popupEditContainer = document.querySelector('#popup-edit');
@@ -59,6 +62,23 @@ const openImage = document.querySelector('.popup__image-view');
 const openImageTitle = document.querySelector('.popup__image-title');
 
 
+// закрытие попап по esc
+const popupCloseEscBtn = evt => {
+  if (evt.key === "Escape" || evt.key === "Esc" || evt.keyCode == 27) {
+    closePopup(document.querySelector('.popup_opened'));
+  };
+};
+
+// закрытие попап по оверлей
+
+const popupCloseOverlay = evt => {
+  if (evt.target === evt.currentTarget) {
+    closePopup(document.querySelector('.popup_opened'));
+  };
+};
+
+
+
 // функция для переиспользования, создание шаблона карточки // 
 function createCard (item) {
     const cardElement = cardTemplate.cloneNode(true);
@@ -82,11 +102,8 @@ function handleCardFormSubmit (event) {
     const cardElement = createCard({name : name, link : link});
 
     elementsCardContainer.prepend(cardElement);
+    
     closePopup(popupCardContainer);
-
-  //   if(event.key === 'Escape') {
-  //     closePopup(popupCardContainer);
-  //  }
 
     event.target.reset()
 };
@@ -104,12 +121,14 @@ provideCards();
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', popupCloseEscBtn);
 }
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    
+};
 
-}
 
 // форма для редактироdания данных о пользователе//
 function handleFormSubmit (event) {
@@ -144,12 +163,13 @@ function openImagePopup(event) {
         .querySelector('.element__title').textContent;
 }
 
-closeButtons.forEach((button) => {
-    // находим 1 раз ближайший к крестику попап 
-    const popup = button.closest('.popup');
-    // устанавливаем обработчик закрытия на крестик
-    button.addEventListener('click', () => closePopup(popup));
-  });
+// closeButtons.forEach((button) => {
+//     // находим 1 раз ближайший к крестику попап 
+//     const popup = button.closest('.popup');
+//     // устанавливаем обработчик закрытия на крестик
+//     button.addEventListener('click', () => closePopup(popup));
+// });
+
 
 popupOpenEditBtn.addEventListener("click", () => {
     nameInput.value = profileTitle.textContent;
@@ -163,20 +183,35 @@ popupAddCardBtn.addEventListener("click", () => {
 
 popupOpenImage.addEventListener("click", openImagePopup);
 
-// popupCloseEditBtn.addEventListener("click", () => {
-//     closePopup(popupEditContainer)
+
+
+// popupCloseEditBtn.addEventListener("click", (evt) => {
+//     evt.preventDefault();
+//     const withinBoundaries = evt.composedPath().includes(popupEditContainer);
+//     if (! withinBoundaries) {
+//       closePopup(popupEditContainer)
+//     };
+//  closePopup(popupEditContainer)
 // });
 
-// popupCloseCardBtn.addEventListener("click", () => {
-//     closePopup(popupCardContainer)
-// });
 
-// popupCloseImageBtn.addEventListener("click", () => {
-//     closePopup(popupImageContainer)
-// });
+popupCloseEditBtn.addEventListener("click", (evt) => {
+    evt.preventDefault();
+    closePopup(popupEditContainer, popupCloseOverlay)
+});
+
+
+popupCloseCardBtn.addEventListener("click", () => {
+    closePopup(popupCardContainer, popupCloseOverlay)
+});
+
+popupCloseImageBtn.addEventListener("click", () => {
+    closePopup(popupImageContainer, popupCloseOverlay)
+});
 
 formEditElement.addEventListener("submit", handleFormSubmit); 
 formCardElement.addEventListener("submit", handleCardFormSubmit);
+
 
 
 
