@@ -94,7 +94,7 @@ function handleCardFormSubmit (event) {
     closePopup(popupCardContainer);
     event.target.reset();
     buttonCard.disabled = true;
-
+    buttonCard.classList.add('popup__submit-btn_inactive');
 };
 
 // собираем карточки в массив и сразу вызываем функцию//
