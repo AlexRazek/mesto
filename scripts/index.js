@@ -31,15 +31,19 @@ const popupAddCardBtn = document.querySelector('.profile__add-button');
 const popupOpenImage = document.querySelector('.elements');
 
 
-const popupContainer = document.querySelector('.popup');
+const popupContainer = document.querySelectorAll('.popup');
 
-const popupCloseEditBtn = document.querySelector('.popup__closed');
-const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
-const popupCloseImageBtn = document.querySelector('#popup-image .popup__closed');
+// const popupCloseEditBtn = document.querySelector('.popup__closed');
+// const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
+// const popupCloseImageBtn = document.querySelector('#popup-image .popup__closed');
 const closeButtons = document.querySelectorAll('.popup__closed');
+const buttonCard = document.querySelector('#btn-card')
 
 const popupEditContainer = document.querySelector('#popup-edit');
 const popupCardContainer = document.querySelector('#popup-addcard');
+const popupCardFormContainer = document.querySelector('#card-popup');
+
+
 const popupImageContainer = document.querySelector('#popup-image');
 const popupImageViewContainer = document.querySelector('#popup__image-container');
 
@@ -62,23 +66,6 @@ const openImage = document.querySelector('.popup__image-view');
 const openImageTitle = document.querySelector('.popup__image-title');
 
 
-// закрытие попап по esc
-const popupCloseEscBtn = evt => {
-  if (evt.key === "Escape" || evt.key === "Esc" || evt.keyCode == 27) {
-    closePopup(document.querySelector('.popup_opened'));
-  };
-};
-
-// закрытие попап по оверлей
-
-const popupCloseOverlay = evt => {
-  if (evt.target === evt.currentTarget) {
-    closePopup(document.querySelector('.popup_opened'));
-  };
-};
-
-
-
 // функция для переиспользования, создание шаблона карточки // 
 function createCard (item) {
     const cardElement = cardTemplate.cloneNode(true);
@@ -95,6 +82,7 @@ function createCard (item) {
 
 //создаем новую карточку c названием и фотографией//
 function handleCardFormSubmit (event) {
+
     event.preventDefault(); 
 
     const name = nameCardInput.value; 
@@ -102,12 +90,12 @@ function handleCardFormSubmit (event) {
     const cardElement = createCard({name : name, link : link});
 
     elementsCardContainer.prepend(cardElement);
-    
+
     closePopup(popupCardContainer);
+    event.target.reset();
+    buttonCard.disabled = true;
 
-    event.target.reset()
 };
-
 
 // собираем карточки в массив и сразу вызываем функцию//
 function provideCards () {
@@ -126,7 +114,7 @@ function openPopup(popup) {
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
-    
+    document.removeEventListener('keydown', popupCloseEscBtn);
 };
 
 
@@ -140,6 +128,7 @@ function handleFormSubmit (event) {
     console.log(profileTitle.textContent);
     console.log(handleFormSubmit);
 };
+
 
 function cardToLike (event) {
     event.target.classList.toggle('element__like_active');
@@ -163,12 +152,34 @@ function openImagePopup(event) {
         .querySelector('.element__title').textContent;
 }
 
-// closeButtons.forEach((button) => {
-//     // находим 1 раз ближайший к крестику попап 
-//     const popup = button.closest('.popup');
-//     // устанавливаем обработчик закрытия на крестик
-//     button.addEventListener('click', () => closePopup(popup));
-// });
+
+// функция закрытия всех крестиков //
+closeButtons.forEach((button) => {
+    // находим 1 раз ближайший к крестику попап 
+    const popup = button.closest('.popup');
+    // устанавливаем обработчик закрытия на крестик
+    button.addEventListener('click', () => closePopup(popup));
+});
+
+
+// функция закрытия по нажатию за пределами модального окна //
+popupContainer.forEach((clickByOverlay) => {
+  clickByOverlay.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      console.log(evt.target);
+      console.log(evt.currentTarget);
+      closePopup(clickByOverlay);
+    };
+  });
+});
+
+
+// закрытие попап по esc
+const popupCloseEscBtn = evt => {
+  if (evt.key === "Escape" || evt.key === "Esc" || evt.keyCode == 27) {
+    closePopup(document.querySelector('.popup_opened'));
+  };
+};
 
 
 popupOpenEditBtn.addEventListener("click", () => {
@@ -182,37 +193,23 @@ popupAddCardBtn.addEventListener("click", () => {
 }); 
 
 popupOpenImage.addEventListener("click", openImagePopup);
-
-
-
-// popupCloseEditBtn.addEventListener("click", (evt) => {
-//     evt.preventDefault();
-//     const withinBoundaries = evt.composedPath().includes(popupEditContainer);
-//     if (! withinBoundaries) {
-//       closePopup(popupEditContainer)
-//     };
-//  closePopup(popupEditContainer)
-// });
-
-
-popupCloseEditBtn.addEventListener("click", (evt) => {
-    evt.preventDefault();
-    closePopup(popupEditContainer, popupCloseOverlay)
-});
-
-
-popupCloseCardBtn.addEventListener("click", () => {
-    closePopup(popupCardContainer, popupCloseOverlay)
-});
-
-popupCloseImageBtn.addEventListener("click", () => {
-    closePopup(popupImageContainer, popupCloseOverlay)
-});
-
 formEditElement.addEventListener("submit", handleFormSubmit); 
 formCardElement.addEventListener("submit", handleCardFormSubmit);
 
 
+// popupCloseEditBtn.addEventListener("click", (evt) => {
+//     evt.preventDefault();
+//     closePopup(popupEditContainer)
+// });
+
+
+// popupCloseCardBtn.addEventListener("click", () => {
+//     closePopup(popupCardContainer)
+// });
+
+// popupCloseImageBtn.addEventListener("click", () => {
+//     closePopup(popupImageContainer)
+// });
 
 
 const formsConfig = {
@@ -227,6 +224,9 @@ const formsConfig = {
 
 
 enableValidation(formsConfig);
+
+
+
 
 
 
