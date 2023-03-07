@@ -27,7 +27,16 @@ const initialCards = [
   ];
 
 import { Card } from './Card.js';
-export { openPopup, closePopup };
+import { FormValidator } from './FormValidator.js';
+
+const enablesValidation = {
+      formSelector: '.popup__input',
+      inputSelector: '.popup__text',
+      submitButtonSelector: '.popup__submit-btn',
+      inactiveButtonClass: 'popup__submit-btn_inactive',
+      inputErrorClass: 'popup__text_type_error',
+      errorClass: 'popup__input-error_active'
+    };
 
 // блок переменных //
 const popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
@@ -98,11 +107,8 @@ const handleCardFormSubmit = (event) => {
     const name = nameCardInput.value; 
     const link = linkCardInput.value; 
     const cardElement = new Card({name : name, link : link}, "#card-template");
-    // console.log(cardElement);
-    // const cardElement = new Card({name, link}, "#card-template");
-    console.log(cardElement);
     
-    elementsCardContainer.prepend(cardElement.generateCard);
+    elementsCardContainer.prepend(cardElement.generateCard());
 
     closePopup(popupCardContainer);
     event.target.reset();
@@ -119,13 +125,13 @@ const handleCardFormSubmit = (event) => {
   }
 provideCards();
 
+// проверяем валидацию для двух разных форм 
+  const enableValidationAddCard = new FormValidator(enablesValidation, popupCardContainer);
+  enableValidationAddCard.enableValidation();
 
-// initialCards.map((item) => {
-//   const cards = new Card(item, "#card-template");
-//   const cardsView = cards.generateCard();
+  const enableValidationEditCard = new FormValidator(enablesValidation, popupEditContainer);
+  enableValidationEditCard.enableValidation();
 
-//   elementsCardContainer.append(cardsView);
-// });
 
 
 function openPopup(popup) {
@@ -137,8 +143,6 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', handleEscape);
 };
-
-
 
 
 // форма для редактироdания данных о пользователе//

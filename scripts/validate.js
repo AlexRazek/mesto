@@ -15,14 +15,14 @@ const showInputError = (formElement, inputElement, errorMessage, settings) => {
     errorElement.classList.add(settings.errorClass);
   };
   
-  const hideInputError = (formElement, inputElement, settings) => {
+const hideInputError = (formElement, inputElement, settings) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
     inputElement.classList.remove(settings.inputErrorClass);
     errorElement.classList.remove(settings.errorClass);
     errorElement.textContent = '';
   };
 
-  const hasInvalidInput = (inputList) => {
+const hasInvalidInput = (inputList) => {
     return inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     })
@@ -45,7 +45,7 @@ const showInputError = (formElement, inputElement, errorMessage, settings) => {
     if (!inputElement.validity.valid) {
       showInputError(formElement, inputElement, inputElement.validationMessage, settings);
     } else {
-      hideInputError(formElement, inputElement,settings);
+      hideInputError(formElement, inputElement, settings);
     }
   };
     
@@ -70,7 +70,6 @@ const showInputError = (formElement, inputElement, errorMessage, settings) => {
   };
   
   
-
   enableValidation({
     formSelector: '.popup__input',
     inputSelector: '.popup__text',
