@@ -1,3 +1,4 @@
+
 const initialCards = [
     {
       name: 'Архыз',
@@ -24,6 +25,18 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
+
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
+const enablesValidation = {
+      formSelector: '.popup__input',
+      inputSelector: '.popup__text',
+      submitButtonSelector: '.popup__submit-btn',
+      inactiveButtonClass: 'popup__submit-btn_inactive',
+      inputErrorClass: 'popup__text_type_error',
+      errorClass: 'popup__input-error_active'
+    };
 
 // блок переменных //
 const popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
@@ -68,46 +81,57 @@ const openImageTitle = document.querySelector('.popup__image-title');
 
 
 // функция для переиспользования, создание шаблона карточки // 
-function createCard (item) {
+// function createCard (item) {
     
-    const cardElement = cardTemplate.cloneNode(true);
-    const cardImage = cardElement.querySelector('.element__image');
+//     const cardElement = cardTemplate.cloneNode(true);
+//     const cardImage = cardElement.querySelector('.element__image');
 
-        cardElement.querySelector('.element__title').textContent = item.name;
-        cardImage.src = item.link;
-        cardImage.alt = item.name;
-        cardElement.querySelector('.element__trash').addEventListener('click', () => {
-            cardElement.remove();
-        });
-        cardElement.querySelector('.element__like').addEventListener('click', (evt) => {
-          evt.target.classList.toggle('element__like_active');
-        });
+//         cardElement.querySelector('.element__title').textContent = item.name;
+//         cardImage.src = item.link;
+//         cardImage.alt = item.name;
+//         cardElement.querySelector('.element__trash').addEventListener('click', () => {
+//             cardElement.remove();
+//         });
+//         cardElement.querySelector('.element__like').addEventListener('click', (evt) => {
+//           evt.target.classList.toggle('element__like_active');
+//         });
 
-        return cardElement;
-}
+//         return cardElement;
+// }
 
 //создаем новую карточку c названием и фотографией//
-function handleCardFormSubmit (event) {
+const handleCardFormSubmit = (event) => {
 
     event.preventDefault(); 
 
     const name = nameCardInput.value; 
     const link = linkCardInput.value; 
-    const cardElement = createCard({name : name, link : link});
-
-    elementsCardContainer.prepend(cardElement);
+    const cardElement = new Card({name : name, link : link}, "#card-template");
+    
+    elementsCardContainer.prepend(cardElement.generateCard());
 
     closePopup(popupCardContainer);
     event.target.reset();
 };
 
-// собираем карточки в массив и сразу вызываем функцию//
-function provideCards () {
-    const cardsElements = initialCards.map(createCard)
+// собираем карточки через Класс в массив и сразу вызываем функцию//
+  const provideCards = () => {
+    initialCards.map((item) => {
+    const cards = new Card(item, "#card-template");
+    const cardsView = cards.generateCard();
 
-    elementsCardContainer.append(...cardsElements);
-}
+    elementsCardContainer.append(cardsView);
+    });
+  }
 provideCards();
+
+// проверяем валидацию для двух разных форм 
+  const enableValidationAddCard = new FormValidator(enablesValidation, popupCardContainer);
+  enableValidationAddCard.enableValidation();
+
+  const enableValidationEditCard = new FormValidator(enablesValidation, popupEditContainer);
+  enableValidationEditCard.enableValidation();
+
 
 
 function openPopup(popup) {
