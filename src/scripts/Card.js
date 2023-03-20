@@ -1,4 +1,8 @@
-import { openPopup, openImageTitle, popupImageContainer, openImage } from "./index.js";
+import { openPopup } from "./Popup.js";
+import {openImage, openImageTitle, popupImageContainer} from '../utils/constants.js';;
+// import Popup from './Popup.js';
+
+
 export { Card };
 
 class Card {

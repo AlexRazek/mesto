@@ -1,58 +1,32 @@
 
 import '../pages/index.css';
-import { initialCards } from '../utils/constants.js';
+import { initialCards, enablesValidation } from '../utils/constants.js';
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
+import { openPopup, closePopup } from './Popup.js';
+// import Popup from './Popup.js';
 
-export { openPopup }
-
-const enablesValidation = {
-      formSelector: '.popup__input',
-      inputSelector: '.popup__text',
-      submitButtonSelector: '.popup__submit-btn',
-      inactiveButtonClass: 'popup__submit-btn_inactive',
-      inputErrorClass: 'popup__text_type_error',
-      errorClass: 'popup__input-error_active'
-    };
-
-// блок переменных //
-const popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
-const popupAddCardBtn = document.querySelector('.profile__add-button');
-
-const popupContainers = document.querySelectorAll('.popup');
-
-// const popupCloseEditBtn = document.querySelector('.popup__closed');
-// const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');
-// const popupCloseImageBtn = document.querySelector('#popup-image .popup__closed');
-const closeButtons = document.querySelectorAll('.popup__closed');
-const buttonCard = document.querySelector('#btn-card')
-
-const popupEditContainer = document.querySelector('.popup_type_profile');
-const popupCardContainer = document.querySelector('.popup_type_card-add');
-const popupCardFormContainer = document.querySelector('#card-popup');
+import { popupOpenEditBtn, 
+  popupAddCardBtn,
+  popupEditContainer,
+  popupCardContainer,
+  profileTitle,
+  profileSubtitle,
+  formEditElement,
+  formCardElement,
+  elementsCardContainer,
+  nameInput,
+  jobInput,
+  nameCardInput,
+  linkCardInput
+} from '../utils/constants.js'
 
 
-export const popupImageContainer = document.querySelector('.popup_type_picture');
-//const popupImageViewContainer = document.querySelector('.popup__image-container');
-
-const profileTitle = document.querySelector('.profile__info-title');
-const profileSubtitle = document.querySelector('.profile__info-subtitle');
 
 const cardTemplate = document
     .querySelector('#card-template')
     .content.querySelector('.element');
-export const elementsCardContainer = document.querySelector('.elements');
-const cardName = document.querySelector('.element__title');
 
-const formEditElement = document.forms['form-popup'];
-const formCardElement = document.forms['form-card'];
-
-const nameInput = document.querySelector('.popup__text_type_name');
-const jobInput = document.querySelector('.popup__text_type_about');
-const nameCardInput = document.querySelector('.popup__text_type_namecard');
-const linkCardInput = document.querySelector('.popup__text_type_linkcard');
-export const openImage = document.querySelector('.popup__image-view');
-export const openImageTitle = document.querySelector('.popup__image-title');
 
 
 // общая функция для создания карточки
@@ -87,15 +61,7 @@ provideCards();
   enableValidationEditCard.enableValidation();
 
 
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    document.addEventListener('keydown', handleEscape);
-}
 
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', handleEscape);
-};
 
 // форма для редактироdания данных о пользователе//
 function handleProfileFormSubmit (event) {
@@ -117,12 +83,6 @@ const popups = document.querySelectorAll('.popup')
     });
   });
 
-// закрытие попап по esc//
-const handleEscape = evt => {
-  if (evt.key === "Escape" || evt.key === "Esc" || evt.keyCode == 27) {
-    closePopup(document.querySelector('.popup_opened'));
-  };
-};
 
 popupOpenEditBtn.addEventListener("click", () => {
     nameInput.value = profileTitle.textContent;
@@ -131,7 +91,7 @@ popupOpenEditBtn.addEventListener("click", () => {
 }); 
 
 popupAddCardBtn.addEventListener("click", () => {
-    openPopup(popupCardContainer)
+  openPopup(popupCardContainer)
 }); 
 
 formEditElement.addEventListener("submit", handleProfileFormSubmit); 
