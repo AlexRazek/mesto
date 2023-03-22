@@ -58,6 +58,10 @@ export const initialCards = [
   export const buttonCard = document.querySelector('#btn-card')
   export const popupCardFormContainer = document.querySelector('#card-popup');
   export const cardName = document.querySelector('.element__title');
+
+  export const cardTemplate = document
+    .querySelector('#card-template')
+    .content.querySelector('.element');
   
   // const popupCloseEditBtn = document.querySelector('.popup__closed');
   // const popupCloseCardBtn = document.querySelector('#popup-addcard .popup__closed');

@@ -1,15 +1,16 @@
-import { openPopup } from "./Popup.js";
+// import { openPopup } from "./Popup.js";
 import {openImage, openImageTitle, popupImageContainer} from '../utils/constants.js';;
-// import Popup from './Popup.js';
+import Popup from './Popup.js';
 
 
-export { Card };
+//export { Card };
 
-class Card {
-  constructor(data, templateSelector) {
+export default class Card {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   };
 
   _getTemplate() {
@@ -19,14 +20,8 @@ class Card {
       .querySelector('.element')
       .cloneNode(true);
   }
-   // метод для открытия карточки
-  _handleCardClick() {
-    openImage.src = this._link;
-    openImage.alt = this._name;
-    openImageTitle.textContent = this._name;
+   // метод для открытия карточки при клике на карточку (_handleCardClick()), убрал в PopupWithImage 
 
-    openPopup(popupImageContainer);
- };
 
   generateCard () {
     this._element = this._getTemplate();
@@ -46,7 +41,7 @@ class Card {
     this._element.querySelector('.element__image')
     .addEventListener("click", (event) => {
       event.preventDefault(); 
-      this._handleCardClick();
+      this._handleCardClick(this._link, this._name);
     });
 
     this._element.querySelector('.element__trash')

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="pages/index.css">
+  <!-- <link rel="stylesheet" href="pages/index.css"> -->
 </head>
 <body class="root">
   <header class="header">
@@ -12,7 +12,7 @@
   </header>
   <main>
     <section class="profile" aria-label="профиль">
-        <img src="./images/profile_avatar.jpg" class="profile__avatar" alt="фотография пользователя">
+        <img src="<%=require('./images/profile_avatar.jpg')%>" class="profile__avatar" alt="фотография пользователя">
         <button type="button" aria-label="добавить данные" class="profile__add-button"></button>
         <div class="profile__info">
             <h1 class="profile__info-title">Жак-Ив Кусто</h1>                
@@ -20,7 +20,7 @@
             <button type="button" aria-label="редактировать данные" class="profile__info-edit-button"></button>
         </div>
     </section>
-    <section class="elements" aria-label="'элементы'"></section>
+    <section class="elements" aria-label="'элементы'"></section>  
   </main>
   <footer class="footer">
     <p class="footer__author"> &copy; 2022&nbsp;Волотчин&nbsp;Александр</p>
@@ -79,6 +79,6 @@
     </article>
   </template>
   <!-- <script defer src="scripts/validate.js"></script> -->
-  <script defer src="./pages/index.js" type="module"></script>
+  <!-- <script defer src="../index.js" type="module"></script> -->
 </body>
 </html>
