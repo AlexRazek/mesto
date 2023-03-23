@@ -2,7 +2,6 @@
 import '../pages/index.css';
 import { initialCards, enablesValidation } from '../utils/constants.js';
 import { FormValidator } from '../scripts/FormValidator.js';
-import { openPopup, closePopup } from '../scripts/Popup.js';
 import Card  from '../scripts/Card.js';
 import Popup from '../scripts/Popup.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
@@ -29,27 +28,75 @@ import { popupOpenEditBtn,
 
 
 
-const handleCardClick = (link, name) => {
-  popupWithImage.openCard(link, name);
-};    
-
+ 
 const popupWithImage = new PopupWithImage('.popup_type_picture')
 popupWithImage.setEventListeners();
 
-const userInfo = new UserInfo({profileTitle, profileSubtitle});
 
-// создание карточек через слой Section
 
-const section = new Section({
+const handleCardClick = (link, name) => {
+  popupWithImage.openCard(link, name);
+};   
+
+// наполнение готовыми карточками через слой Section
+const createCards = new Section({
   items: initialCards,
   renderer: (item) => {
     const card = new Card(item, "#card-template", handleCardClick);
     const cardElement = card.generateCard();
-    section.setItem(cardElement);
+    createCards.setItem(cardElement);
   }
 }, elementsCardContainer);  
 
-section.renderItems();
+createCards.renderItems();
+
+
+// добавление карточек через popup
+const addCardPopupWithForm = new PopupWithForm ('.popup_type_card-add', () => {
+  createCards.renderItems(generateCard (
+  {name : nameCardInput.value, link : linkCardInput.value}, "#card-template", handleCardClick));
+  addCardPopupWithForm.closeForm();
+  })
+addCardPopupWithForm.setEventListeners();
+
+
+const userInfo = new UserInfo({profileTitle, profileSubtitle});
+console.log(profileTitle)
+
+
+//попап редактирования профиля
+const editProfilePopupWithForm = new PopupWithForm ('.popup_type_profile', ((evt, data) => {
+    evt.preventDefault();
+    userInfo.setUserInfo({username: data.username, userAbout: data.userAbout}),
+  editProfilePopupWithForm.closePopup();
+})
+);
+editProfilePopupWithForm.setEventListeners();
+
+
+// проверяем валидацию для двух разных форм 
+// для формы добавления карточки
+const enableValidationAddCard = new FormValidator(enablesValidation, popupCardContainer);
+enableValidationAddCard.enableValidation();
+
+// для формы редактирования профиля 
+const enableValidationEditCard = new FormValidator(enablesValidation, popupEditContainer);
+enableValidationEditCard.enableValidation();
+
+
+popupOpenEditBtn.addEventListener("click", () => {
+
+  nameInput.value = userInfo.getUserInfo().username;
+  console.log(nameInput.value)
+  jobInput.value = userInfo.getUserInfo().userAbout;
+  console.log(jobInput.value)
+  editProfilePopupWithForm.openPopup();
+  
+}); 
+
+popupAddCardBtn.addEventListener("click", () => {
+addCardPopupWithForm.openPopup();
+}); 
 
 
 // общая функция для создания карточки
@@ -76,14 +123,6 @@ section.renderItems();
 //   }
 // provideCards();
 
-// проверяем валидацию для двух разных форм 
-  const enableValidationAddCard = new FormValidator(enablesValidation, popupCardContainer);
-  enableValidationAddCard.enableValidation();
-
-  const enableValidationEditCard = new FormValidator(enablesValidation, popupEditContainer);
-  enableValidationEditCard.enableValidation();
-
-
 
 
 // форма для редактироdания данных о пользователе//
@@ -107,17 +146,9 @@ section.renderItems();
 //   });
 
 
-// popupOpenEditBtn.addEventListener("click", () => {
-//     nameInput.value = profileTitle.textContent;
-//     jobInput.value = profileSubtitle.textContent;
-//     openPopup(popupEditContainer);
-// }); 
 
-// popupAddCardBtn.addEventListener("click", () => {
-//   openPopup(popupCardContainer)
-// }); 
 
-// formEditElement.addEventListener("submit", handleProfileFormSubmit); 
+// formEditElement.addEventListener("submit", editProfilePopupWithForm); 
 // formCardElement.addEventListener("submit", handleCardFormSubmit);
 
 
