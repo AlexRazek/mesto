@@ -1,5 +1,3 @@
-
-
 export default class UserInfo {
     constructor({profileTitle, profileSubtitle}) {
       this._name = profileTitle;
@@ -8,13 +6,14 @@ export default class UserInfo {
 
 getUserInfo () {
     return {
-        username: this._name.textContent,
-        userAbout: this._aboutUser.textContent,
+        nameauthor: this._name.textContent,
+        aboutauthor: this._aboutUser.textContent,
     };
-};
+    };
 
-setUserInfo (username, userAbout) {
-    this._name.textContent = username;
-    this._aboutUser.textContent = userAbout;
+
+setUserInfo ({nameauthor, aboutauthor}) {
+    this._name.textContent = nameauthor;
+    this._aboutUser.textContent = aboutauthor;
     };
-}    
+}

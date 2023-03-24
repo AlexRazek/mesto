@@ -10,14 +10,18 @@ export default class PopupWithForm extends Popup {
 
 
     _getInputValues() {
-        dataForm = {};
-        this._inputList.forEach((item) => { dataForm[item.name] = item.value }); 
-        return dataForm;
+        this._dataForm = {};
+        this._inputList.forEach((item) => { this._dataForm[item.name] = item.value }); 
+        console.log(this._dataForm);
+        return this._dataForm;
     };
 
     setEventListeners() {
         super.setEventListeners();
-        this._submitForm.addEventListener('submit', () => {this._callbackSubmitForm(this._getInputValues())})
+        this._submitForm.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            this._callbackSubmitForm(this._getInputValues());
+        });
     };
 
         

@@ -6,16 +6,16 @@ export default class Section {
       this._container = containerSelector;
     }
   
-    setItem(element) {
-      this._container.append(element);
+    setItem(element) {  
+      this._container.prepend(element);
     }
   
-    clear() {
-      this._container.innerHTML = '';
-    }
+    // clear() {
+    //   this._container.innerHTML = '';
+    //}
   
     renderItems() {
-      this.clear();
+    //   this.clear();
   
       this._renderedItems.forEach(item => {
         this._renderer(item)

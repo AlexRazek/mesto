@@ -1,10 +1,3 @@
-// import { openPopup } from "./Popup.js";
-import {openImage, openImageTitle, popupImageContainer} from '../utils/constants.js';;
-import Popup from './Popup.js';
-
-
-//export { Card };
-
 export default class Card {
   constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
@@ -37,7 +30,6 @@ export default class Card {
 
   _setEventListeners() {
 
-    // функция открытия popup с карточкой//
     this._element.querySelector('.element__image')
     .addEventListener("click", (event) => {
       event.preventDefault(); 
