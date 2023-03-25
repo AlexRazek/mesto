@@ -1,12 +1,12 @@
 
 import '../pages/index.css';
 import { initialCards, enablesValidation } from '../utils/constants.js';
-import { FormValidator } from '../scripts/FormValidator.js';
-import Card  from '../scripts/Card.js';
-import PopupWithImage from '../scripts/PopupWithImage.js';
-import PopupWithForm from '../scripts/PopupWithForm.js';
-import Section from '../scripts/Section.js';
-import UserInfo from '../scripts/UserInfo.js';
+import { FormValidator } from '../components/FormValidator.js';
+import Card  from '../components/Card.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
 
 import { popupOpenEditBtn, 
   popupAddCardBtn,
@@ -51,14 +51,14 @@ createCards.renderItems();
 // добавление карточек через popup
 const addCardPopupWithForm = new PopupWithForm (
   '.popup_type_card-add', 
-  () => { createCards.setItem ( provideCards(
+  { callbackSubmitForm: () => {createCards.setItem(provideCards(
     {name : nameCardInput.value, 
     link : linkCardInput.value}, 
     "#card-template", handleCardClick));
   addCardPopupWithForm.closeForm();
   enableValidationAddCard.disableSubmitButton();
-
-  })
+  }}
+);
 addCardPopupWithForm.setEventListeners();
 
 //User
@@ -68,10 +68,10 @@ console.log(profileTitle)
 
 //попап редактирования профиля
 const editProfilePopupWithForm = new PopupWithForm ('.popup_type_profile', 
-  (data) => {userInfo.setUserInfo( 
+{ callbackSubmitForm: (data) => {userInfo.setUserInfo( 
     {nameauthor: data.nameauthor, aboutauthor: data.aboutauthor});
   editProfilePopupWithForm.closeForm();
-}
+}}
 );
 editProfilePopupWithForm.setEventListeners();
 
@@ -90,9 +90,10 @@ enableValidationEditCard.enableValidation();
 // открытие Попапа с профилем
 popupOpenEditBtn.addEventListener("click", () => {
 
-  nameInput.value = userInfo.getUserInfo().nameauthor;
+  const userData = userInfo.getUserInfo();
+  nameInput.value = userData.nameauthor;
   console.log(nameInput.value)
-  jobInput.value = userInfo.getUserInfo().aboutauthor;
+  jobInput.value = userData.aboutauthor;
   console.log(jobInput.value)
   editProfilePopupWithForm.openPopup();
   
