@@ -51,15 +51,20 @@ createCards.renderItems();
 // добавление карточек через popup
 const addCardPopupWithForm = new PopupWithForm (
   '.popup_type_card-add', 
-  { callbackSubmitForm: () => {createCards.setItem(provideCards(
-    {name : nameCardInput.value, 
-    link : linkCardInput.value}, 
+  { callbackSubmitForm: (data) => {createCards.setItem(provideCards(
+    {name : data.namecard, 
+     link : data.linkcard}, 
     "#card-template", handleCardClick));
   addCardPopupWithForm.closeForm();
   enableValidationAddCard.disableSubmitButton();
   }}
 );
 addCardPopupWithForm.setEventListeners();
+
+
+// { callbackSubmitForm: () => {createCards.setItem(provideCards(
+//   {name : nameCardInput.value, 
+//   link : linkCardInput.value}, 
 
 //User
 const userInfo = new UserInfo({profileTitle, profileSubtitle});
@@ -69,7 +74,8 @@ console.log(profileTitle)
 //попап редактирования профиля
 const editProfilePopupWithForm = new PopupWithForm ('.popup_type_profile', 
 { callbackSubmitForm: (data) => {userInfo.setUserInfo( 
-    {nameauthor: data.nameauthor, aboutauthor: data.aboutauthor});
+    {nameauthor: data.nameauthor, 
+     aboutauthor: data.aboutauthor});
   editProfilePopupWithForm.closeForm();
 }}
 );
