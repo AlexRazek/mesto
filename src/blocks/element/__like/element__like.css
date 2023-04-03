@@ -5,15 +5,15 @@
     background-repeat: no-repeat;
     background-size: cover;
     border: none;
-    align-self: center;
-    justify-content: center;
+    align-self: end;
+    /* align-self: center; */
+    /* justify-content: center; */
     width: 22px;
     height: 19px;
     border-radius: 2px;
-    grid-column: 2;
-    grid-row: 2;
+    margin-bottom: 0;
     justify-self: center;
-    margin-right: 20px;
+    /* margin-right: 20px; */
     opacity: 1;
     cursor: pointer;
 }

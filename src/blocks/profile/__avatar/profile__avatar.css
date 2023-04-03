@@ -1,11 +1,10 @@
 .profile__avatar {
     width: 100%;
-    grid-column: 1;
-    grid-row: 1;
-    max-width: 120px;
+    width: 120px;
     height: 120px;
     place-self: center center;
     border-radius: 50%;
+    z-index: 1;
     /* object-fit: cover;
     overflow:clip; */
 }
@@ -15,3 +14,16 @@
         grid-row: 1;
     }
   }
+
+
+  /* .profile__avatar {
+    width: 100%;
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 120px;
+    height: 120px;
+    place-self: center center;
+    border-radius: 50%;
+    /* object-fit: cover;
+    overflow:clip; */
+/* } */ 
