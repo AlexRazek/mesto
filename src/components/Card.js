@@ -16,6 +16,7 @@ export default class Card {
    // метод для открытия карточки при клике на карточку (_handleCardClick()), убрал в PopupWithImage 
 
 
+
   generateCard () {
     this._element = this._getTemplate();
     this._setEventListeners();

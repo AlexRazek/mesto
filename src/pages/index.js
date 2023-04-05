@@ -1,7 +1,8 @@
 
 import '../pages/index.css';
-import { initialCards, enablesValidation } from '../utils/constants.js';
+import { provideCards, createCards, api } from '../utils/functions';
 import { FormValidator } from '../components/FormValidator.js';
+import Api from '../components/api.js'
 import Card  from '../components/Card.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -17,69 +18,93 @@ import { popupOpenEditBtn,
   elementsCardContainer,
   nameInput,
   jobInput,
+  enablesValidation,
+  initialCards,
   nameCardInput,
-  linkCardInput,
+  linkCardInput
 } from '../utils/constants.js'
 
 
-const popupWithImage = new PopupWithImage('.popup_type_picture')
-popupWithImage.setEventListeners();
-
-const handleCardClick = (link, name) => {
+export const handleCardClick = (link, name) => {
   popupWithImage.openCard(link, name);
-};   
-
-//функция для создания карточек
-const provideCards = (item) => {
-    const cards = new Card(item, "#card-template", handleCardClick);
-    const cardsView = cards.generateCard();
-    return cardsView;
-};
-
-// наполнение готовыми карточками через слой Section
-const createCards = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    // const card = new Card(item, "#card-template", handleCardClick);
-    // const cardElement = card.generateCard();
-    createCards.setItem(provideCards(item));
-  }
-}, elementsCardContainer);  
-
-createCards.renderItems();
-
-// добавление карточек через popup
-const addCardPopupWithForm = new PopupWithForm (
-  '.popup_type_card-add', 
-  { callbackSubmitForm: (data) => {createCards.setItem(provideCards(
-    {name : data.namecard, 
-     link : data.linkcard}, 
-    "#card-template", handleCardClick));
-  addCardPopupWithForm.closeForm();
-  enableValidationAddCard.disableSubmitButton();
-  }}
-);
-addCardPopupWithForm.setEventListeners();
-
-
-// { callbackSubmitForm: () => {createCards.setItem(provideCards(
-//   {name : nameCardInput.value, 
-//   link : linkCardInput.value}, 
+}; 
 
 //User
 const userInfo = new UserInfo({profileTitle, profileSubtitle});
 console.log(profileTitle)
 
 
-//попап редактирования профиля
-const editProfilePopupWithForm = new PopupWithForm ('.popup_type_profile', 
-{ callbackSubmitForm: (data) => {userInfo.setUserInfo( 
-    {nameauthor: data.nameauthor, 
-     aboutauthor: data.aboutauthor});
-  editProfilePopupWithForm.closeForm();
-}}
-);
+// данные о пользователе через слой UserInfo по API
+api.getUserInfo()
+  .then((data) => {
+    userInfo.setUserInfo( 
+      {nameauthor: data.name, 
+       aboutauthor: data.about})
+  })
+  .catch((err) => {
+    console.log(`Ошибка при загрузке информации о пользователе: ${err}`); // выведем ошибку в консоль
+});
+
+// обновление данных профиля через popup с помощью API
+const editProfilePopupWithForm = new PopupWithForm (
+  '.popup_type_profile', { 
+    callbackSubmitForm: (data) => {
+    api.editUserInfo(data)
+  .then((item) => 
+    {userInfo.setUserInfo(
+      {name: item.nameauthor, 
+       about: item.aboutauthor});
+      editProfilePopupWithForm.closeForm();
+  enableValidationAddCard.disableSubmitButton();
+  })
+  .catch((err) => {
+    console.log(`Ошибка при редактировании профиля: ${err}`); // выведем ошибку в консоль
+  })
+  }
+})
 editProfilePopupWithForm.setEventListeners();
+
+
+// наполнение готовыми карточками через слой Section по API
+api.getAllCards()
+  .then((data) => {
+  const createCards = new Section({
+    renderer: (item) => {
+    createCards.setItem(provideCards(item));
+  }
+}, elementsCardContainer);  
+createCards.renderItems(data);
+})
+.catch((err) => {
+  console.log(`Ошибка при загрузке карточек: ${err}`); // выведем ошибку в консоль
+});
+
+
+// добавление карточек через popup с помощью API
+const addCardPopupWithForm = new PopupWithForm (
+  '.popup_type_card-add', { 
+    callbackSubmitForm: (data) => {
+    api.addNewCard(
+      {name : data.namecard, 
+      link : data.linkcard})
+  .then((item) => 
+    {createCards.setItem(provideCards(item));
+  addCardPopupWithForm.closeForm();
+  // enableValidationAddCard.disableSubmitButton();
+  })
+  .catch((err) => {
+    console.log(`Ошибка при создании новой карточки: ${err}`); // выведем ошибку в консоль
+  })
+  }
+})
+addCardPopupWithForm.setEventListeners();
+
+
+const popupWithImage = new PopupWithImage('.popup_type_picture')
+popupWithImage.setEventListeners();
+
+  
+
 
 
 // проверяем валидацию для двух разных форм 
