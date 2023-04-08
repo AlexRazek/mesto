@@ -42,12 +42,20 @@ export default class Api {
         }).then((res) => this._resResponse(res))
         };
     
-    deleteCard (_id) {
-        return fetch(`${this._url}cards/${_id}`, {
+    deleteCard(idCard) {
+        return fetch(`${this._url}cards/${idCard}`, {
             method: "DELETE",
             headers: this._headers,
         }).then((res) => this._resResponse(res))
         };
+
+    editAvatarInfo (data) {
+        return fetch(`${this._url}users/me/avatar`, {
+            method: "PATCH",
+            headers: this._headers,
+            body: JSON.stringify({avatar: data.linkavatar})
+        }).then((res) => this._resResponse(res))
+        };   
     };
 
 

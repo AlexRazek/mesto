@@ -38,11 +38,20 @@ export const initialCards = [
 
   export const popupOpenEditBtn = document.querySelector('.profile__info-edit-button');
   export const popupAddCardBtn = document.querySelector('.profile__add-button');
+  export const popupDeleteCardBtn = document.querySelector('.popup__submit-btn_delete')
+
+  export const popupAvatarBtn = document.querySelector('.profile__avatar-button')
+
   export const popupEditContainer = document.querySelector('.popup_type_profile');
   export const popupCardContainer = document.querySelector('.popup_type_card-add');
+  export const popupAvatarContainer = document.querySelector('.popup_type_update-profile');
+  export const popupAlertContainer = document.querySelector('.popup_type_card-delete')
   export const popupImageContainer = document.querySelector('.popup_type_picture');
+
   export const profileTitle = document.querySelector('.profile__info-title');
   export const profileSubtitle = document.querySelector('.profile__info-subtitle');
+  export const profileAvatar = document.querySelector('.profile__avatar')
+
   export const formEditElement = document.forms['form-popup'];
   export const formCardElement = document.forms['form-card'];
   export const elementsCardContainer = document.querySelector('.elements');

@@ -8,12 +8,24 @@ export default class Section {
     setItem(element) {  
       this._container.prepend(element);
     };
-  
-    renderItems(data) {  
-      data.forEach(item => {
-            this._renderer(item)
-      });
+
+    //  renderItems(cardsData) {  
+    //     Array.from(cardsData).forEach((item) => {
+    //       this._renderer(item)
+    //   });
+    // }
+
+    renderItems(cardsData) {  
+      cardsData.reverse().forEach(this._renderer)
+      };
     }
-  };
+  
+    // renderItems(data) {  
+    //   data.forEach(function(item){
+    //         this._renderer(item)
+    //   })
+    // }
+  // }; 
 
 
+  // Array.from(selected_rows).forEach(item => console.log(item))
