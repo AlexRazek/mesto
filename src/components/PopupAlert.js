@@ -3,31 +3,33 @@ import Popup from './Popup.js'
 export default class PopupAlert extends Popup {
     constructor(popupSelector, { callbackAlertForm }) {
         super(popupSelector);
-        this._callbackAlertForm = callbackAlertForm;
-        this._submitForm = this._popupItem.querySelector('.popup__input')  
+        this._submitForm = this._popupItem.querySelector(".popup__input"); 
+        this._callbackAlertForm = callbackAlertForm;  
     };
 
 
-//     openAlertForm = (data) => {
-//         this._idCard = data.idCard;
-//         this._element = data.element;
-//         super.openPopup();
-//  };
-    openAlertForm = () => {
+    openAlertForm(idCard, element) {
+        this._idCard = idCard;
+        this._element = element;
         super.openPopup();
     };
 
+
     setEventListeners() {
-        super.setEventListeners();
-        this._submitForm.addEventListener('submit', (evt) => {
+        this._submitForm.addEventListener("submit", (evt) => {
             evt.preventDefault();
-            this._callbackAlertForm(this._data);
-            // this._callbackAlertForm({idCard: this._idCard, element: this._element});
-        });
+            // this._callbackAlertForm();
+            // this._callbackAlertForm(this._data);
+            this._callbackAlertForm(this._idCard, this._element);
+   
+
+
+    });
+        super.setEventListeners();
     };
 
         
-    closeAlertForm = () => {
+    closeAlertForm() {
         // this._submitForm.reset();
         super.closePopup();
     };

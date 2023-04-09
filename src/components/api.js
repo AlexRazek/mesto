@@ -55,8 +55,25 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify({avatar: data.linkavatar})
         }).then((res) => this._resResponse(res))
-        };   
-    };
+        };  
+    
+    setLikes(idCard) {
+        return fetch(`${this._url}cards/${idCard}/likes`, {
+            method: "PUT",
+            headers: this._headers,
+        }).then((res) => this._resResponse(res))
+        };
+
+    deletLikes(idCard) {
+        return fetch(`${this._url}cards/${idCard}/likes`, {
+            method: "DELETE",
+            headers: this._headers,
+        }).then((res) => this._resResponse(res))
+        };
+
+    }
+
+
 
 
 

@@ -8,7 +8,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
-import PopupAlert from '../components/PopupAlert';
+import PopupAlert from '../components/PopupAlert.js';
 
 import { popupOpenEditBtn, 
   popupAddCardBtn,
@@ -33,10 +33,6 @@ import { popupOpenEditBtn,
 
 let userId
 
-// export const handleCardDelete = ({idCard, element}) => {
-//   popupAlertDelete.openAlertForm({idCard, element})
-// }; 
-
 
 Promise.all([ api.getUserInfo(), api.getAllCards()])
   .then(([userData, cardsData]) => {
@@ -48,7 +44,6 @@ Promise.all([ api.getUserInfo(), api.getAllCards()])
   .catch((err) => {
     console.log(`Ошибка при загрузке информации: ${err}`); // выведем ошибку в консоль
 });
-
 
 
 //функция для создания карточек
@@ -84,17 +79,6 @@ const userInfo = new UserInfo({profileTitle, profileSubtitle, profileAvatar});
 console.log(profileTitle)
 
 
-// // данные о пользователе через слой UserInfo по API
-// api.getUserInfo()
-//   .then((data) => {
-//     userInfo.setUserInfo( 
-//       {nameauthor: data.name, 
-//        aboutauthor: data.about})
-//   })
-//   .catch((err) => {
-//     console.log(`Ошибка при загрузке информации о пользователе: ${err}`); // выведем ошибку в консоль
-// });
-
 // обновление данных профиля через popup с помощью API
 const editProfilePopupWithForm = new PopupWithForm (
   '.popup_type_profile', { 
@@ -118,22 +102,6 @@ const editProfilePopupWithForm = new PopupWithForm (
   }}
 )
 editProfilePopupWithForm.setEventListeners();
-
-
-// // наполнение готовыми карточками через слой Section по API
-// api.getAllCards()
-//   .then((data) => {
-//   const createCards = new Section({
-//     renderer: (item) => {
-//     createCards.setItem(provideCards(item));
-//   }
-// }, elementsCardContainer);  
-// // createCards.renderItems(data);
-
-// })
-// .catch((err) => {
-//   console.log(`Ошибка при загрузке карточек: ${err}`); // выведем ошибку в консоль
-// });
 
 
 // добавление карточек через popup с помощью API //
@@ -160,49 +128,33 @@ const addCardPopupWithForm = new PopupWithForm (
 addCardPopupWithForm.setEventListeners();
 
 
-export const handleCardDelete = (data) =>{
-  const popupAlertDelete = new PopupAlert (
+// удаление карточки через Popup по API
+export const handleCardDelete = (idCard, element) => {
+  // popupAlertDelete.openAlertForm(idCard, element);
+const popupAlertDelete = new PopupAlert (
       '.popup_type_card-delete', { 
-        callbackAlertForm: (data) => {   
-        api.deleteCard({idCard: data.idCard})
-      .then((res) => {data.element.remove(); 
-          popupAlertDelete.closePopup();
-          // popupAlertDelete.deleteCard() 
-          console.log(res);
+        callbackAlertForm: (idCard, element) => {   
+        api.deleteCard(idCard)
+      .then((element) => {
+          // popupAlertDelete.closeAlertForm();
+          // element.remove(); 
+          console.log(element);
     })
   .catch((err) => {
     console.log(`Ошибка при удалении карточки: ${err}`); // выведем ошибку в консоль
-  });
-}}
-  )
-  popupAlertDelete.openAlertForm();
-  popupAlertDelete.setEventListeners();
+  })
+  .finally(() => {
+    element.remove(); 
+    popupAlertDelete.closePopup();
+  })
+  }}
+)
+popupAlertDelete.openAlertForm(idCard, element);
+popupAlertDelete.setEventListeners();
 }
 
-// export const handleCardDelete = ({data}) => {
-//   popupAlertDelete.openAlertForm({data})
-// }; 
-
-// не сделан ....
-// попап предупреждение об удалении карточки с помощью API
-// const popupAlertDelete = new PopupAlert (
-//   '.popup_type_card-delete', { 
-//     callbackAlertForm: (data) => {   
-//     api.deleteCard({idCard: data.idCard})
-//   .then((res) => {data.element.remove();  
-//       // popupAlertDelete.closePopup();
-//       console.log(res);
-//   // enableValidationAddCard.disableSubmitButton();
-//   })
-//   .catch((err) => {
-//     console.log(`Ошибка при удалении карточки: ${err}`); // выведем ошибку в консоль
-//   })
-//   }
-// })
-// popupAlertDelete.setEventListeners();
 
 //  редактирование аватара //
-
 const editAvatarPopupWithForm = new PopupWithForm (
   '.popup_type_update-profile', { 
     callbackSubmitForm:(data) => {
@@ -211,8 +163,6 @@ const editAvatarPopupWithForm = new PopupWithForm (
   .then((res) => 
     {userInfo.setAvatarUser({avatar: res.avatar});
     console.log(res);
-  // editAvatarPopupWithForm.closeForm();
-  // enableValidationAddCard.disableSubmitButton();
   })
   .catch((err) => {
     console.log(`Ошибка изменении картинки: ${err}`); // выведем ошибку в консоль
@@ -225,6 +175,7 @@ const editAvatarPopupWithForm = new PopupWithForm (
   )
 editAvatarPopupWithForm.setEventListeners();
   
+
 
 // проверяем валидацию для двух разных форм 
 // для формы добавления карточки
@@ -252,19 +203,19 @@ popupOpenEditBtn.addEventListener("click", () => {
   
 }); 
 
-// открытие Попапа для добавления картинки с подписью
+//открытие Попапа для добавления картинки с подписью
 popupAddCardBtn.addEventListener("click", () => {
   addCardPopupWithForm.openPopup();
 }); 
 
 // открытие Попапа подтверждения удаления 
-popupAlertContainer.addEventListener("click", () => {
-  popupAlertDelete.openPopup();
-}); 
+// popupAlertContainer.addEventListener("click", () => {
+//   popupAlertDelete.openPopup();
+// }); 
 
-popupAvatarBtn.addEventListener("click", () => {
-  editAvatarPopupWithForm.openPopup();
-}); 
+// popupAvatarBtn.addEventListener("click", () => {
+//   editAvatarPopupWithForm.openPopup();
+// }); 
 
 
 
