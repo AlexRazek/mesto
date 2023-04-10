@@ -70,19 +70,7 @@ export default class Api {
             headers: this._headers,
         }).then((res) => this._resResponse(res))
         };
-
     }
 
-
-
-
-
-    // getCardById () {
-    //     return fetch(`${this._url}cards`, {
-    //         method: "GET",
-    //         headers: this._headers,
-    //     }).then((res) => this._resResponse(res))
-    //     };    
-    
     
 

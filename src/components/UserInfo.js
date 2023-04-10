@@ -4,7 +4,6 @@ export default class UserInfo {
       this._aboutUser = profileSubtitle;
     //   this._idUser = idUser;
       this._avatarUser = profileAvatar;
-
     };
 
 getUserInfo () {
@@ -13,18 +12,14 @@ getUserInfo () {
         aboutauthor: this._aboutUser.textContent,
         // idUser: this._idUser,
         linkavatar: this._avatarUser.src,
-    };
+    }
     };
 
 
 setUserInfo ({nameauthor, aboutauthor}) {
-    this._name.textContent = nameauthor;
-    this._aboutUser.textContent = aboutauthor;
-    };
-
-// setIdUser () {
-
-//     };
+    this._name.textContent = nameauthor,
+    this._aboutUser.textContent = aboutauthor
+    }
 
 setAvatarUser ({avatar}) {
     this._avatarUser.src = avatar; 

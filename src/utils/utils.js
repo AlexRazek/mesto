@@ -1,4 +1,4 @@
-import Api from '../components/api.js'
+import Api from '../components/Api.js'
 
 export const api = new Api ({
     url: 'https://mesto.nomoreparties.co/v1/cohort-63/',

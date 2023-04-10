@@ -16,7 +16,6 @@ export default class PopupWithForm extends Popup {
     };
 
 
-
     _getInputValues() {
         this._dataForm = {};
         this._inputList.forEach(item => { this._dataForm[item.name] = item.value }); 
@@ -34,7 +33,7 @@ export default class PopupWithForm extends Popup {
 
         
     closeForm() {
-        super.closePopup();
         this._submitForm.reset();
+        super.closePopup();
     };
 }

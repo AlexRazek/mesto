@@ -8,9 +8,9 @@ export default class PopupAlert extends Popup {
     };
 
 
-    openAlertForm(idCard, element) {
+    openAlertForm(idCard, elementCard) {
         this._idCard = idCard;
-        this._element = element;
+        this._elementCard = elementCard;
         super.openPopup();
     };
 
@@ -20,7 +20,7 @@ export default class PopupAlert extends Popup {
             evt.preventDefault();
             // this._callbackAlertForm();
             // this._callbackAlertForm(this._data);
-            this._callbackAlertForm(this._idCard, this._element);
+            this._callbackAlertForm(this._idCard, this._elementCard);
    
 
 

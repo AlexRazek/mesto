@@ -19,13 +19,3 @@ export default class Section {
       cardsData.reverse().forEach(this._renderer)
       };
     }
-  
-    // renderItems(data) {  
-    //   data.forEach(function(item){
-    //         this._renderer(item)
-    //   })
-    // }
-  // }; 
-
-
-  // Array.from(selected_rows).forEach(item => console.log(item))

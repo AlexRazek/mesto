@@ -34,7 +34,7 @@ export default class Card {
     this._setEventListeners();
     this._trashIkon();
     // this.countLikes();
-    // this.isLiked();
+    // this.isLikedCard();
     this.showLikeHeard(); 
     
 
@@ -58,41 +58,41 @@ export default class Card {
   };
 
   //счетчик лайков
-  countLikes(likes){
-    this._likes = likes;
+  countLikes(likes) {
     const countLikes = this._element.querySelector('.element__like-counter')
-    countLikes.textContent = this._data.likes.length;
-      if (this._element.querySelector('.element__like').classList.contains('element__like_active')) {
-        countLikes.textContent = this._data.likes.length + 1;
-      } else {
-        countLikes.textContent = this._data.likes.length - 1;
-      };
-    return countLikes
-  };
+    countLikes.textContent = likes.length
+  }
   
-  // показать активные лайки 
+  //показать активные лайки 
   showLikeHeard() {
-      if(this.isLiked()) {
-        this.setLike();
+      if(this.isLikedCard()) {
+        this.setLike(this._idCard);
         } else {
-          this.deleteLike();
+          this.deleteLike(this._idCard);
         };
       };
 
 
-  isLiked() {
-    return this._data.likes.some((like) => like._userId === this._id)
+  isLikedCard() {
+    return this._data.likes.find((like) => like._id === this._userId)
   };
 
   //установка лайка//
   setLike() {
-    return this._element.querySelector('.element__like').classList.add('element__like_active')
+    this._element.querySelector('.element__like').classList.add('element__like_active');
+    this.isLiked = true;
   };
 
    // удаление лайка//
   deleteLike() {
-    return this._element.querySelector('.element__like').classList.remove('element__like_active')
+    this._element.querySelector('.element__like').classList.remove('element__like_active');
+    this.isLiked = false;
   };
+
+  // удаление карточки //
+  cardDelete() {
+    this._element.remove();
+  }
 
   _setEventListeners = () => {
 
@@ -105,31 +105,16 @@ export default class Card {
     if (this._userId === this._idOwner) {
       this._element.querySelector('.element__trash').addEventListener('click', (event) => {
         event.preventDefault(); 
-        this._handleCardDelete(this._idCard, this._element);
+        this._handleCardDelete(this._idCard, this);
       // this._handleCardDelete({idCard: this._idCard, element: this._element})
       });
     }
 
     this._element.querySelector('.element__like')
     .addEventListener('click', () => {
-      this._handleLikeDelete();
+      this._handleLikeDelete(this._idCard);
       // evt.target.classList.toggle('element__like_active');
     });
     };
   }
-
-
-
-
-
-
-    //проверка лайкнутости
-  // isLikedTrue = () => {
-  //   this._data.likes.forEach((like) => {
-  //   if(like._id == this._userId) {
-  //     this._likeBtn.classList.add('element__like_active')
-  //   }
-  // }
-  // )};
-
  
