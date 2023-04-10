@@ -1,6 +1,6 @@
 
 import '../pages/index.css';
-import { api } from '../utils/functions';
+import { api } from '../utils/utils';
 import { FormValidator } from '../components/FormValidator.js';
 import Api from '../components/api.js'
 import Card  from '../components/Card.js';
@@ -32,6 +32,7 @@ import { popupOpenEditBtn,
 
 
 let userId
+// let likes
 
 
 Promise.all([ api.getUserInfo(), api.getAllCards()])
@@ -48,8 +49,34 @@ Promise.all([ api.getUserInfo(), api.getAllCards()])
 
 //функция для создания карточек
 export const provideCards = (data) => {
-  const cards = new Card(data, userId, "#card-template", handleCardClick, handleCardDelete);
-  // console.log(idUser)
+  const cards = new Card(
+    data
+    , userId
+    , "#card-template"
+    , handleCardClick
+    , handleCardDelete
+    , { handleLikeDelete: () => {
+      if(cards._likes.some((like) => like._id === userId)) {
+        api.deleteLikes(data._id)
+      .then((res) => {
+        cards.deleteLike();
+        cards.countLikes(res.likes);
+      })
+      .catch((err) => {
+        console.log(`Ошибка при удалени лайка: ${err}`); // выведем ошибку в консоль
+      })
+    } else {
+      api.setLikes(data._id) 
+      .then((res) => {
+        cards.setLike();
+        cards.countLikes(res.likes);
+      })
+      .catch((err) => {
+        console.log(`Ошибка при установке лайка: ${err}`); // выведем ошибку в консоль
+      })
+    }
+  }}
+  );
   const cardsView = cards.generateCard();
   return cardsView;
 };
@@ -59,6 +86,7 @@ export const handleCardClick = (link, name) => {
   popupWithImage.openCard(link, name);
   popupWithImage.setEventListeners();
 }; 
+
 
 // const popupWithImage = new PopupWithImage('.popup_type_picture')
 // popupWithImage.setEventListeners();
@@ -154,7 +182,7 @@ popupAlertDelete.setEventListeners();
 }
 
 
-//  редактирование аватара //
+//  редактирование фото аватара //
 const editAvatarPopupWithForm = new PopupWithForm (
   '.popup_type_update-profile', { 
     callbackSubmitForm:(data) => {
@@ -171,9 +199,10 @@ const editAvatarPopupWithForm = new PopupWithForm (
     editAvatarPopupWithForm.setLoading(false);
     editAvatarPopupWithForm.closeForm();
   })
-  }}
+  }},
   )
-editAvatarPopupWithForm.setEventListeners();
+  // editAvatarPopupWithForm.openPopup()
+  editAvatarPopupWithForm.setEventListeners();
   
 
 
@@ -213,9 +242,9 @@ popupAddCardBtn.addEventListener("click", () => {
 //   popupAlertDelete.openPopup();
 // }); 
 
-// popupAvatarBtn.addEventListener("click", () => {
-//   editAvatarPopupWithForm.openPopup();
-// }); 
+popupAvatarBtn.addEventListener("click", () => {
+  editAvatarPopupWithForm.openPopup();
+}); 
 
 
 

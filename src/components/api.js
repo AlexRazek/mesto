@@ -64,7 +64,7 @@ export default class Api {
         }).then((res) => this._resResponse(res))
         };
 
-    deletLikes(idCard) {
+    deleteLikes(idCard) {
         return fetch(`${this._url}cards/${idCard}/likes`, {
             method: "DELETE",
             headers: this._headers,
