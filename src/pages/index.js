@@ -41,7 +41,6 @@ Promise.all([ api.getUserInfo(), api.getAllCards()])
     console.log(`Ошибка при загрузке информации: ${err}`); // выведем ошибку в консоль
 });
 
-
 //функция для создания карточек
 export const provideCards = (data) => {
   const cards = new Card(
@@ -51,30 +50,27 @@ export const provideCards = (data) => {
     , handleCardClick
     , handleCardDelete
     , { handleLikeDelete: (idCard) => {
-      if(cards.isLiked) {
-      // if(cards._likes.some((like) => like._id === userId)) {
-        api.deleteLikes(idCard)
-        // api.deleteLikes(data._id)
-      .then((res) => {
-        cards.deleteLike();
-        cards.countLikes(res.likes);
-      })
-      .catch((err) => {
-        console.log(`Ошибка при удалени лайка: ${err}`); // выведем ошибку в консоль
-      })
+      if(cards.isLikedIt()) {
+          api.deleteLikes(idCard)
+        .then((res) => {
+          cards.deleteLike();
+          cards.countLikes(res.likes);
+        })
+        .catch((err) => {
+          console.log(`Ошибка при удалени лайка: ${err}`); // выведем ошибку в консоль
+        })
     } else {
-      // api.setLikes(data._id) 
       api.setLikes(idCard) 
       .then((res) => {
         cards.setLike();
         cards.countLikes(res.likes);
       })
       .catch((err) => {
-        console.log(`Ошибка при установке лайка: ${err}`); // выведем ошибку в консоль
+        console.log(`Ошибка при постановке лайка: ${err}`); // выведем ошибку в консоль
       })
-    }
-  }}
-  );
+    } 
+  }});
+
   const cardsView = cards.generateCard();
   return cardsView;
 };
@@ -104,7 +100,7 @@ console.log(profileTitle)
 const editProfilePopupWithForm = new PopupWithForm (
   '.popup_type_profile', { 
     callbackSubmitForm: (data) => {
-    editProfilePopupWithForm.setLoading(true);
+    editProfilePopupWithForm.setLoading();
     api.editUserInfo(data)
   .then((item) => 
     {userInfo.setUserInfo(
@@ -116,7 +112,7 @@ const editProfilePopupWithForm = new PopupWithForm (
     console.log(`Ошибка при редактировании профиля: ${err}`); // выведем ошибку в консоль
   })
   .finally(() => {
-    editProfilePopupWithForm.setLoading(false);
+    editProfilePopupWithForm.unsetLoading();
   })
   }}
 )
@@ -127,6 +123,7 @@ editProfilePopupWithForm.setEventListeners();
 const addCardPopupWithForm = new PopupWithForm (
   '.popup_type_card-add', { 
     callbackSubmitForm: (data) => {
+    addCardPopupWithForm.setLoading();
     api.addNewCard(
       {name : data.namecard, 
       link : data.linkcard})
@@ -136,6 +133,9 @@ const addCardPopupWithForm = new PopupWithForm (
   })
   .catch((err) => {
     console.log(`Ошибка при создании новой карточки: ${err}`); // выведем ошибку в консоль
+  })
+  .finally(() => {
+    addCardPopupWithForm.unsetLoading();
   })
 }}
 )
@@ -147,6 +147,7 @@ export const handleCardDelete = (idCard, elementCard) => {
   popupAlertDelete.openAlertForm(idCard, elementCard);
 };  
 
+// попап подтверждения удаления карточки 
 const popupAlertDelete = new PopupAlert (
       '.popup_type_card-delete', { 
         callbackAlertForm: (idCard, elementCard) => {   
@@ -169,7 +170,7 @@ popupAlertDelete.setEventListeners();
 const editAvatarPopupWithForm = new PopupWithForm (
   '.popup_type_update-profile', { 
     callbackSubmitForm:(data) => {
-    editAvatarPopupWithForm.setLoading(true);
+    editAvatarPopupWithForm.setLoading();
     api.editAvatarInfo(data)
   .then((res) => 
     {userInfo.setAvatarUser({avatar: res.avatar});
@@ -179,7 +180,7 @@ const editAvatarPopupWithForm = new PopupWithForm (
     console.log(`Ошибка изменении картинки: ${err}`); // выведем ошибку в консоль
   })
   .finally(() => {
-    editAvatarPopupWithForm.setLoading(false);
+    editAvatarPopupWithForm.unsetLoading();
     editAvatarPopupWithForm.closeForm();
   })
   }},
